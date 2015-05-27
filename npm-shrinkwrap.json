@@ -1,0 +1,21 @@
+{
+  "name": "mapapi",
+  "version": "1.0.0",
+  "dependencies": {
+    "leaflet": {
+      "version": "0.7.3",
+      "from": "leaflet@",
+      "resolved": "https://registry.npmjs.org/leaflet/-/leaflet-0.7.3.tgz"
+    },
+    "lodash": {
+      "version": "3.0.0",
+      "from": "lodash@3.0.0",
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.0.0.tgz"
+    },
+    "validator": {
+      "version": "3.28.0",
+      "from": "validator@3.28.0",
+      "resolved": "https://registry.npmjs.org/validator/-/validator-3.28.0.tgz"
+    }
+  }
+}

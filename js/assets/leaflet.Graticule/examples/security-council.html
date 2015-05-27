@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>UN Security Council - Categorical map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" /><![endif]-->
+  <link rel="stylesheet" href="css/map.css" />
+</head>
+<body>
+  <div id="map"></div>
+  <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script> 
+  <script src="lib/leaflet.label.js"></script>      
+  <script src="lib/reqwest.min.js"></script>    
+  <script src="../src/L.Categorical.js"></script>    
+  <script>
+
+    reqwest({
+      url: 'data/countries-50m.json', 
+      success: function (response) {
+        createMap(response);
+      }
+    })
+
+    function createMap(geojson) {
+      var map = L.map('map').setView([0,0], 2);
+
+      L.categorical(geojson, {
+        id: 'iso_a2',
+        group: [{
+          name: 'Permanent member',
+          color: '#f00',
+          features: ['CN', 'RU', 'US', 'FR', 'GB']
+        }, {
+          name: 'Elected member',
+          color: '#ff0',
+          features: ['CO', 'IN', 'DE', 'PT', 'ZA', 'AZ', 'GT', 'MA', 'PK', 'TG']
+        }],
+        onEachFeature: function(feature, layer) {
+          var id = feature.properties[this.id];
+          layer.bindLabel('<strong>' + feature.properties.name + '</strong>' + ((this.group[id]) ? '<br/>' + this.group[id].name : '')).addTo(map);
+        }
+      });
+
+    }
+
+  </script>
+</body>
+</html>

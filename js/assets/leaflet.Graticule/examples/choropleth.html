@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Choropleth - Leaflet</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" /><![endif]-->
+  <style>
+
+    html, body, #map { 
+      margin: 0;
+      width: 100%; 
+      height: 100%; 
+    }
+
+    .leaflet-legend, .leaflet-label {
+      background: white;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);      
+      border-radius: 5px;   
+      font: 14px/16px Arial, Helvetica, sans-serif;       
+    }
+
+    .leaflet-legend {
+      text-align: left;
+      line-height: 18px;
+      color: #555;
+      z-index: 6;
+      width: 110px;               
+      padding: 6px 8px;
+    }
+
+    .leaflet-legend h4 {
+      margin: 0 0 5px;
+      color: #777;
+      text-align: center;
+    }
+
+    .leaflet-legend i {
+      width: 18px;
+      height: 18px;
+      float: left;
+      margin-right: 8px;
+      opacity: 0.7;
+    }
+
+    .leaflet-label {
+      display: block;
+      padding: 6px;
+      position: absolute;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+      white-space: nowrap;
+      z-index: 8;
+      margin-top: 35px;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script> 
+  <script src="lib/leaflet.label.js"></script>      
+  <script src="lib/proj4js-compressed.js"></script>
+  <script src="lib/proj4leaflet.js"></script>   
+  <script src="lib/tme.color.js"></script> 
+  <script src="../src/L.Choropleth.js"></script>    
+  <script src="data/countries-110m.js"></script> 
+  <script src="data/footprint.js"></script> 
+  <script>
+
+    var crs = L.CRS.proj4js('ESRI:54009', '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs');
+    crs.scale = function(zoom) {
+      return 1 / (131072 / Math.pow(2, zoom));
+    };
+
+    var map = L.map('map', {
+      crs: crs,
+      worldCopyJump: false
+    }).setView([0,0], 2);
+
+    L.choropleth(countries, {
+      name: 'Ecological Footprint',
+      id: 'a2',
+      data: footprint,
+      classification: 'quantiles',
+      colors: tme.color.RdYlGn
+    }).addTo(map);
+
+    map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
+
+  </script>
+</body>
+</html>

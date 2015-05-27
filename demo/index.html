@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Map API PROTOTYPE Driver</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <!-- OpenLayers -->
+    <link rel="stylesheet" href="../dist/openlayers/style.css" />
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="../dist/leaflet/leaflet.css" />
+    <!-- OpenLayers 3 -->
+    <link rel="stylesheet" href="../dist/openlayers/ol3/ol.css" />
+    <!-- Custom -->
+    <link rel="stylesheet" href="css/demo.css" />
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+  <![endif]-->
+
+</head>
+
+<body>
+<div class="container">
+
+    <div class="row prototype-banner">
+        <div class="center-block">
+            <h3>Demonstration purposes only: API is currently a PROTOTYPE and not recommended for production use.</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="map1" class="col-md-6 map map-placeholder"></div>
+        <div id="map2" class="col-md-6 map map-placeholder"></div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <select class="form-control" id="mapContainer" name="mapContainer">
+                        <option>map1</option>
+                        <option>map2</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary center-block" id="createOLMapButton">Create OpenLayers</button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary center-block" id="createOL3MapButton">Create OpenLayers 3</button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-success center-block" id="createLMapButton">Create Leaflet</button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-warning center-block" id="setActiveMapButton">Set Active Map</button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-info center-block" id="resetMapButton">Reset Map</button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-danger center-block" id="destroyMapButton">Destroy Map</button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-default center-block" id="resizeMapButton">Resize Map</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+
+        <div role="tabpanel">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#zoomMethods" aria-controls="zoomMethods" role="tab" data-toggle="tab">Zoom/Pan Methods</a></li>
+                <li role="presentation"><a href="#features" aria-controls="features" role="tab" data-toggle="tab">Add/Remove Features</a></li>
+                <li role="presentation"><a href="#layerMgmt" aria-controls="layerMgmt" role="tab" data-toggle="tab">Layer Management</a></li>
+                <li role="presentation"><a href="#uiControls" aria-controls="uiControls" role="tab" data-toggle="tab">Toggle UI Controls</a></li>
+                <li role="presentation"><a href="#events" aria-controls="events" role="tab" data-toggle="tab">Events</a></li>
+                <li role="presentation"><a href="#miscExamples" aria-controls="miscExamples" role="tab" data-toggle="tab">Miscellaneous Examples</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane in active" id="zoomMethods">
+                    <div class="row top-buffer">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-primary center-block" id="zoomInButton">In</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-success center-block" id="zoomOutButton">Out</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-warning center-block" id="zoomToFullExtentButton">Full Extent</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-danger center-block" id="getZoomButton">Get Zoom</button>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Zoom:&nbsp;&nbsp;</label><span id="currentZoom"></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="number" class="form-control" id="zoomLevel" name="zoomLevel" min="0">
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-default" id="setZoomButton">Set Zoom</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row top-buffer">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-danger center-block" id="getCenterButton">Get Center</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Lat:&nbsp;&nbsp;</label><span id="currentLat"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Long:&nbsp;&nbsp;</label><span id="currentLong"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="centerLat">Lat:&nbsp;&nbsp;</label><input type="text" class="form-control" id="centerLat" name="centerLat" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="centerLng">Long:&nbsp;&nbsp;</label><input type="text" class="form-control" id="centerLng" name="centerLng" />
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-default" id="setCenterButton">Set Center</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="features">
+                    <div class="row top-buffer">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-4"><label for="featureId">Feature ID:&nbsp;&nbsp;</label></div>
+                                <div class="col-md-8"><input type="text" class="form-control" id="featureId" name="featureId" /></div>
+                            </div>
+                            <div class="row top-buffer">
+                                <div class="col-md-4"><label for="theLayerId">Layer ID:&nbsp;&nbsp;</label></div>
+                                <div class="col-md-8"><input type="text" class="form-control" id="theLayerId" name="theLayerId" /></div>
+                            </div>
+                            <div class="row top-buffer">
+                                <div class="col-md-3"><label>Lat:&nbsp;&nbsp;</label></div>
+                                <div class="col-md-3"><input type="text" class="form-control featureLat" id="pointLat" placeholder="latitude" /></div>
+                                <div class="col-md-3"><label>Long:&nbsp;&nbsp;</label></div>
+                                <div class="col-md-3"><input type="text" class="form-control featureLng" id="pointLng" placeholder="longitude" /></div>
+                            </div>
+                            <div id="latLngTemplate">
+                                <div class="row top-buffer">
+                                    <div class="col-md-3"><label>Lat:&nbsp;&nbsp;</label></div>
+                                    <div class="col-md-3"><input type="text" class="form-control featureLat" id="pointLat2"  placeholder="latitude" /></div>
+                                    <div class="col-md-3"><label>Long:&nbsp;&nbsp;</label></div>
+                                    <div class="col-md-3"><input type="text" class="form-control featureLng" id="pointLng2" placeholder="longitude" /></div>
+                                </div>
+                            </div>
+                            <div class="row top-buffer">
+                                <div class="col-md-3"><label>Lat:&nbsp;&nbsp;</label></div>
+                                <div class="col-md-3"><input type="text" class="form-control featureLat" id="pointLat3"  placeholder="latitude" /></div>
+                                <div class="col-md-3"><label>Long:&nbsp;&nbsp;</label></div>
+                                <div class="col-md-3"><input type="text" class="form-control featureLng" id="pointLng3" placeholder="longitude" /></div>
+                            </div>
+                            <div id="latLngWrapper"></div>
+                            <div class="row top-buffer">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-default" id="addAnotherButton">Add Another:</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-warning center-block" id="createPointButton">Create Point</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-warning center-block" id="removePointButton">Remove Point</button>
+                                </div>
+                            </div>
+                            <div class="row top-buffer">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-primary center-block" id="createMultipointButton">Create Multipoint</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-primary center-block" id="removeMultipointButton">Remove Multipoint</button>
+                                </div>
+                            </div>
+                            <div class="row top-buffer">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-success center-block" id="createLineButton">Create Line</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-success center-block" id="removeLineButton">Remove Line</button>
+                                </div>
+                            </div>
+                            <div class="row top-buffer">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-info center-block" id="createPolygonButton">Create Polygon</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-info center-block" id="removePolygonButton">Remove Polygon</button>
+                                </div>
+                            </div>
+                            <div class="row top-buffer">
+                                <button type="button" class="btn btn-danger center-block" id="removeAllFeaturesButton">Remove All Features</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="layerMgmt">
+                    <div class="row top-buffer">
+                        <div class="col-md-2">
+                            <label for="layerId">layerId:</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="layerId" name="layerId" placeholder="layerId" />
+                        </div>
+                    </div>
+                    <div class="row top-buffer">
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="layerUrl" name="layerUrl" placeholder="WMS Layer URL" />
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="layerNames" name="layerNames" placeholder="comma separated layer names" />
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary center-block" id="addWmsLayer">Add WMS Layer</button>
+                        </div>
+                    </div>
+                    <div class="row top-buffer">
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-success center-block" id="toggleLayerVisibility">Toggle Layer Visibility</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-warning center-block" id="removeLayer">Remove Layer</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-info center-block" id="setBaseLayer">Set Base Layer</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-default center-block" id="addVectorLayer">Add Vector Layer</button>
+                        </div>
+                    </div>
+                    <div class="row top-buffer">
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-default center-block" id="getZorder">Get zOrder</button>
+                            <span id="currZorder"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" id="newZorder" name="newZorder" min="0" placeholder="zOrder">
+                            <button type="button" class="btn btn-danger center-block" id="setZorder">Set zOrder</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-default center-block" id="getOpacity">Get Opacity</button>
+                            <span id="currOpacity"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="newOpacity" name="newOpacity" placeholder="opacity" />
+                            <button type="button" class="btn btn-danger center-block" id="setOpacity">Set Opacity</button>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="uiControls">
+                    <div class="row top-buffer">
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-primary center-block" id="toggleZoomButton">Toggle Zoom</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-success center-block" id="toggleScaleButton">Toggle Scale</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-warning center-block" id="toggleCoordinatesButton">Toggle Coordinates</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-info center-block" id="toggleGraticuleButton">Toggle Graticule</button>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="events">
+                    <div class="row top-buffer">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="listenerId" name="listenerId" placeholder="listenerId" />
+                        </div>
+                        <div class="col-md-4">
+                            <textarea class="form-control" id="listener" placeholder="// JavaScript code to execute ... }"></textarea>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-primary center-block" id="registerClickListener">Register Click Listener</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-danger center-block" id="unregisterClickListener">Unregister Click Listener</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-info center-block" id="registerHoverListener">Register Hover Listener</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-warning center-block" id="unregisterHoverListener">Unregister Hover Listener</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-info center-block" id="registerMapMoveListener">Register Map Move Listener</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-warning center-block" id="unregisterMapMoveListener">Unregister Map Move Listener</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-primary center-block" id="registerZoomEndListener">Register Zoom End Listener</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-danger center-block" id="unregisterZoomEndListener">Unregister Zoom End Listener</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-primary center-block" id="registerOutListener">Register Out Listener</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-danger center-block" id="unregisterOutListener">Unregister Out Listener</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="miscExamples">
+                    <div class="row top-buffer">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary center-block" id="exampleWmsLayer">Denmark WMS Layer</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-success center-block" id="twentyFivePoints">25 Individual Points</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-warning center-block" id="polygonLineMultiPoint">Polygon + Line + Multipoint</button>
+                        </div>
+                    </div>
+                    <div class="row top-buffer">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-info center-block" id="olArcGIS93Rest">OpenLayers ArcGIS93Rest (Map 1)</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-danger center-block" id="lArcGIS93Rest">Leaflet ArcGIS93Rest (Map 2)</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-default center-block" id="olArcGISCache">OpenLayers ArcGISCache (Map 1)</button>
+                        </div>
+                    </div>
+                    <div class="row top-buffer">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary center-block" id="exampleWmtsLayer">US Population Change WMTS Layer</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-success center-block" id="londonKml">London KML</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-warning center-block" id="exampleGeoJson">Europe GeoJSON</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../dist/mapapi.js"></script>
+<script type="text/javascript" src="js/apidriver.js"></script>
+</body>
+</html>

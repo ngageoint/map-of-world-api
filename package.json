@@ -1,0 +1,48 @@
+{
+  "name": "mapapi",
+  "version": "1.0.0",
+  "description": "This Map API supports multiple web-based mapping libraries and provides a consistent set of methods for interacting with any of the supported implementations.",
+  "repository": {
+    "type": "git",
+    "url": "https://git.geointapps.org/dyeager/map-api"
+  },
+  "devDependencies": {
+    "browserify": "^7.0.0",
+    "browserify-shim": "^3.8.1",
+    "express": "^4.10.7",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.2.1",
+    "grunt-clear": "^0.2.1",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-csslint": "^0.3.1",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-env": "^0.4.2",
+    "grunt-express-server": "^0.4.19",
+    "grunt-htmlhint": "^0.4.1",
+    "grunt-jscs": "^1.1.0",
+    "grunt-jsdoc": "^0.6.1",
+    "grunt-newer": "^0.8.0",
+    "grunt-nightwatch": "^0.3.1",
+    "grunt-plato": "dcy2003/grunt-plato",
+    "jit-grunt": "^0.9.0",
+    "load-grunt-config": "^0.16.0",
+    "time-grunt": "^1.0.0"
+  },
+  "dependencies": {
+    "leaflet": "^0.7.3",
+    "lodash": "^3.0.0",
+    "validator": "^3.22.2"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "./js/assets/openLayers/2.13.1/OpenLayers.js": "OpenLayers",
+    "./node_modules/leaflet/dist/leaflet.js": "L"
+  }
+}

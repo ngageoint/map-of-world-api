@@ -1,0 +1,14 @@
+{
+  "name": "leaflet.Graticule",
+  "homepage": "https://github.com/turban/leaflet-plugins",
+  "_release": "0cc4e4d071",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "0cc4e4d07149b2dc111f48628c1a2e742bc0d70d"
+  },
+  "_source": "git://github.com/turban/leaflet-plugins.git",
+  "_target": "*",
+  "_originalSource": "leaflet.Graticule",
+  "_direct": true
+}

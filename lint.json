@@ -1,0 +1,3 @@
+{
+	"dirs": ["*.js", "js/app/**/*.js", "test/**/*.js", "grunt/**/*.js"]
+}

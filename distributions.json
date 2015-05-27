@@ -1,0 +1,10 @@
+{
+    "default": "dist/mapapi.js",
+    "default_min": "dist/mapapi.min.js",
+    "ol2": "dist/mapapi_ol2_only.js",
+    "ol2_min": "dist/mapapi_ol2_only.min.js",
+    "ol3": "dist/mapapi_ol3_only.js",
+    "ol3min": "dist/mapapi_ol3_only.min.js",
+    "leaflet": "dist/mapapi_leaflet_only.js",
+    "leaflet_min": "dist/mapapi_leaflet_only.min.js"
+}
