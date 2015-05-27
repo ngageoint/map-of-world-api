@@ -1,4 +1,4 @@
-
+﻿
 Origin
 ------
 
@@ -25,6 +25,11 @@ Development Guidelines
 * JavaScript source files are bundled into a single file for distribution via [Browserify](http://browserify.org/) and minified using [Uglify](https://github.com/mishoo/UglifyJS)
 * [NightwatchJS](http://nightwatchjs.org/) + [Selenium](http://www.seleniumhq.org/) are used for automated end-to-end tests
 * New functionality must be developed in a descriptively named feature branch and code reviewed prior to being merged into the 'master' branch
+
+API Documentation
+-----------------
+
+* A zip file of the [Map API documentation](https://github.com/ngageoint/map-of-world-api/raw/master/docs/mapapi_jsdoc.zip) is available for those that wish to review the documentation prior to building the project themselves.  
 
 Build Process
 -------------
