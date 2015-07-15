@@ -2,6 +2,8 @@
 Origin
 ------
 
+[![Join the chat at https://gitter.im/ngageoint/map-of-world-api](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ngageoint/map-of-world-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Map of the World API was developed at the [National Geospatial-Intelligence Agency](http://www.nga.mil) in collaboration with [Booz Allen Hamilton](http://www.boozallen.com). The government has "unlimited rights" and is releasing this software to increase the impact of government investments by providing developers with the opportunity to take things in new directions. The software use, modification, and distribution rights are stipulated within the [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html) license.
 
 Contributing
