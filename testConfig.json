@@ -1,5 +1,5 @@
 {
-    "seleniumJarLocation": "C:/Users/stoweca/selenium/selenium-server-standalone-2.44.0.jar",
+    "seleniumJarLocation": "C:/selenium/selenium-server-standalone-2.44.0.jar",
     "seleniumHost": "127.0.0.1",
     "seleniumPort": 4444,
     "localExpressServerPort": 3000

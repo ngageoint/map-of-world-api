@@ -35,7 +35,7 @@ module.exports = function(grunt) {
     require('time-grunt')(grunt);
 
     // task groupings (helpers)
-    grunt.registerTask('lint', ['newer:jshint', 'newer:jscs', 'newer:htmlhint', 'newer:csslint']);
+    grunt.registerTask('lint', ['newer:jshint', 'newer:htmlhint', 'newer:csslint']);
     grunt.registerTask('prep', ['clean', 'copy']);
     grunt.registerTask('test', ['env:def', 'express:test', 'nightwatch', 'express:test:stop']);
     grunt.registerTask('minify:default', ['browserify:default', 'uglify:default']);
